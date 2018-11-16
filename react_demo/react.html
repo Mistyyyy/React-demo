@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+  <div id="root">
+    <!-- this is react application container -->
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+  <script type="text/babel">
+    const numbers = [1, 2, 3, 4, 5]
+    const posts = [
+      {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+      {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+    ]
+    const listNumber = numbers.map(num => <div>{ num }</div>)
+    function ListNumbers(props) {
+      return (
+        <li>
+          { props.values }
+        </li>
+      )
+    }
+
+    function Numbers(props) {
+      return (
+        <ul>
+          {
+            props.number.map((item, index) =>
+              <ListNumbers key={ index } values={ item } />
+            )
+          }
+        </ul>
+      )
+    }
+
+    function Blog(props) {
+      const blogInfo = props.posts
+      const sideInfo = (<ul>
+        {
+          blogInfo.map((key, index) => 
+            <li key={ key.id }>
+              { key.title }
+            </li>
+          )
+        }
+      </ul>)
+      const mainContent = 
+        blogInfo.map((key, index) => 
+          <div key={ index }>
+            <h3>{ key.title }</h3>
+            <p>{ key.content }</p>
+          </div>
+        )
+
+      return (
+        <div>
+          { sideInfo }
+          <hr/>
+          { mainContent }
+        </div>
+      )
+    }
+    ReactDOM.render(
+        <div>
+          <h1>PHello, world!</h1>
+          <div>{ listNumber }</div>
+          <Numbers number={ numbers } />
+          <Blog posts={ posts} />
+        </div>,
+        document.getElementById('root')
+      )
+  </script>
+</body>
+</html>

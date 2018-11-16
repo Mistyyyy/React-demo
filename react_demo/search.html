@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .no {
+      color: #f00;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+  <script type="text/babel">
+    const salesInfo = [
+      {category: "Sporting", price: "$49.99", stocked: true, name: "Football"},
+      {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+      {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+      {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+      {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+      {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+    ]
+    const getCategory = key => key.category
+    const getSearchProducts = (arr, target, state) => arr.filter((item, key) => item.name === target && item.stocked >= state)
+    const getTargetInfo = (arr, key) => arr.reduce((cur, acc) => {
+      acc.category === key
+        ? cur.push(acc)
+        : ''
+      return cur
+    }, [])
+
+    class InputSearch extends React.Component {
+      constructor(props) {
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+      }
+      handleChange(e) {
+        this.props.onInputChange(e.target.value)
+      }
+      render() {
+        return (
+          <input 
+            type = "text"
+            value = { this.props.inputValue } 
+            onChange = { this.handleChange }
+            placeHolder = "search..."
+          />
+        )
+      }
+    }
+
+    class CheckBox extends React.Component {
+      constructor(props) {
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+      }
+      handleChange(e) {
+        this.props.onCheckboxChange(e.target.checked)
+      }
+      render() {
+        return (
+          <div>
+            <input
+              type="checkbox"
+              checked = { this.props.checkboxState }
+              onChange = { this.handleChange }
+            />
+            <span>only show products in stock</span>
+          </div>
+        )
+      }
+    }
+
+    class SearchBar extends React.Component {
+      handleCheckboxChange = this.handleCheckboxChange.bind(this)
+      handleInputChange = this.handleInputChange.bind(this)
+      constructor(props) {
+        super(props)
+      }
+      handleCheckboxChange(targetInStock) {
+        const { targetValue }= this.props
+        this.props.onChange({
+          targetValue,
+          targetInStock
+        })
+      }
+      handleInputChange(targetValue) {
+        const { targetInStock } = this.props
+        this.props.onChange({
+          targetValue,
+          targetInStock
+        })
+      }
+      render() {
+        return (
+          <div>
+            <InputSearch 
+              onInputChange = { this.handleInputChange } 
+              inputValue = { this.props.targetValue }
+            />
+            <CheckBox 
+              onCheckboxChange = { this.handleCheckboxChange } 
+              checkboxState = { this.props.targetInStock }
+            />
+          </div>
+        )
+      }
+    }
+
+    class ProductRow extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        const { productsName, productsPrice, isSaleInStocks } = this.props
+        return (
+          <tr>
+            <td className = { isSaleInStocks ? 'in' : 'no' }> { productsName } </td>
+            <td> { productsPrice } </td>
+          </tr>
+        )
+      }
+    }
+
+    class ProductCategoryRow extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        const { categoryName }= this.props
+        return (
+          <tr>
+            <td> { categoryName } </td>
+          </tr>
+        )
+      }
+    }
+
+    class ProductTable extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        // 商品的列表 输入框的查询 复选框的勾选
+        const { salesInfo, targetValue, targetInStock } = this.props
+        const salesList = targetValue ? getSearchProducts(salesInfo, targetValue, targetInStock) : salesInfo
+        // 生成目录
+        const allCategory = !salesList ? [] : [...new Set(salesList.map(getCategory))]
+        // 空列表
+        const emptyList = (
+          <tbody>
+              <tr>
+                <td> no products find</td>
+              </tr>
+            </tbody>
+        )
+        const rowList = allCategory.map((key, index) =>
+          (
+            [
+              <ProductCategoryRow categoryName = { key } key = { index } />,
+              getTargetInfo(salesList, key).map((item, i) => 
+                <ProductRow 
+                  productsName = { item.name } 
+                  productsPrice = { item.price } 
+                  isSaleInStocks = { item.stocked }
+                  key = { i }
+                />
+              )
+            ]
+          )
+        )
+        const rowDetails = !salesList.length 
+          ? emptyList
+          : rowList
+        return (
+          <table>
+            <thead>
+              <tr>
+                <th>names</th>
+                <th>prices</th>
+              </tr>
+            </thead>
+            { rowDetails }
+          </table>
+        )
+      }
+    }
+    class FilterableProductTable extends React.Component {
+      state = {
+        targetValue: '',
+        targetInStock: false
+      }
+      handleChange = this.handleChange.bind(this)
+      constructor(props) {
+        super(props)
+      }
+      handleChange(value) {
+        this.setState(value)
+      }
+      render() {
+        return (
+          <div>
+            <SearchBar 
+              targetValue = { this.state.targetValue } 
+              targetInStock = { this.state.targetInStock }
+              onChange = { this.handleChange }
+            />
+            <ProductTable 
+              targetValue = { this.state.targetValue } 
+              targetInStock = { this.state.targetInStock }
+              { ...this.props }
+            />
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(
+      <FilterableProductTable salesInfo = { salesInfo } />,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+
+</html>

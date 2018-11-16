@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<div id="root">
+
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+	<script type="text/babel">
+		const toInt = Number.parseFloat
+			const toCelsius = nums => (nums - 32) * 5 / 9 // 转华氏摄氏度
+			const toFahrenheit = nums => (nums * 9 / 5) + 32 // 转摄氏度
+			const tryConvert = (nums, toFn) => {
+				return (
+					toInt(nums).constructor.name === 'Number'
+						? toFn(nums)
+						: ''
+				)
+			}
+			class ParDesc extends React.Component {
+				constructor(props) {
+					super(props)
+				}
+				render() {
+					return (
+						<p>{ this.props.title } </p>	 
+					)
+				}
+			}
+      class Tempure extends React.Component {
+				constructor(props) {
+					super(props)
+				}
+				render() {
+					return (
+						this.props.tempure > 100 
+							? <p>水可以烧开</p>
+							: <p>水不能烧开</p>	 
+					)
+				}
+			}
+			class TypeTempure extends React.Component {
+				constructor(props) {
+					super(props)
+					this.handleChange = this.handleChange.bind(this)
+				}
+				handleChange(e) {
+					this.props.onTempureChange(e.target.value)
+				}
+				render() {
+					return (
+						<div>
+							<ParDesc title = { this.props.type === 'c' ? '请输入摄氏度' : '请输入华氏摄氏度' } />
+							<input type = "number" value = { this.props.tempure } onChange = { this.handleChange } />
+						</div>
+					)
+				}
+			}
+			class FinalCalc extends React.Component {
+				constructor(props) {
+					super(props)
+					this.state = {
+						type: 'c',
+						tempure: ''
+					}
+					this.handleCelsius = this.handleCelsius.bind(this)
+					this.handleFah = this.handleFah.bind(this)
+				}
+				handleCelsius(tempure) {
+					this.setState({
+						type: 'c',
+						tempure
+					})
+				}
+				handleFah(tempure) {
+					this.setState({
+						type: 'f',
+						tempure
+					})
+				}
+				render() {
+					const { type, tempure }= this.state
+					const celsius = type === 'f' ? tryConvert(tempure, toCelsius) : tempure
+					const fahrenheit = type === 'c' ? tryConvert(tempure, toFahrenheit) : tempure
+					return (
+						<form>
+							<TypeTempure 
+								type ='c'
+								tempure = { celsius }
+								onTempureChange = { this.handleCelsius }
+							/>
+							<TypeTempure 
+								type = 'f'
+								tempure = { fahrenheit }
+								onTempureChange = { this.handleFah }
+							/>
+							<Tempure tempure= { celsius }/>
+						</form>	 
+					)
+				}
+			} 
+			class Calculator extends React.Component {
+				constructor(props) {
+					super(props)
+					this.state = {
+						tempure : ''
+					}
+					this.handleChange = this.handleChange.bind(this)
+				}
+				handleChange(event) {
+					const target = event.target
+					this.setState({
+						tempure: target.value
+					})
+				}
+				render() {
+					return (
+						<form>
+							<label>
+								<p>请输入一个摄氏温度</p>	
+								<input type="number" value={this.state.tempure} onChange={this.handleChange} />
+							</label>d
+							<Tempure tempure={toInt(this.state.tempure)} />
+						</form>	 
+					)
+				}
+			}
+			ReactDOM.render(
+				<div>
+					<Calculator />
+					<FinalCalc />
+				</div>,
+				document.getElementById('root')
+			)
+    </script>
+</body>
+
+</html>
