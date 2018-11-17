@@ -31,8 +31,71 @@
         )
       }
     }
+
+    class RefInput extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        const { refInput } = this.props 
+        return (
+          <input type="text" ref={ refInput }/>
+        )
+      }
+    }
+
+    class Button extends React.Component {
+      constructor(props) {
+        super(props)
+        this.handleChange = this.handleChange.bind(this)
+      }
+      handleChange() {
+        this.props.onButtonChange()
+      }
+      render() {
+        return (
+          <input type="button" value="press" onClick={ this.handleChange } />
+        )
+      }
+    }
+
+    class Wrapper extends React.Component {
+      constructor(props) {
+        super(props)
+        this.focusChange = this.focusChange.bind(this)
+      }
+      focusChange() {
+        this.inputEle.focus()
+      }
+      componentDidMout() {
+        console.dir(this)
+      }
+      render() {
+        return (
+          <div>
+            <RefInput refInput={ el => this.inputEle = el }/>
+            <Button onButtonChange={ this.focusChange } />
+          </div>  
+        )
+      }
+    }
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        return (
+          <div>
+            <Wrapper />
+            <TextInput />
+          </div>
+        )
+      }
+    }
+
     ReactDOM.render(
-      <TextInput />,
+      <App />,
       document.getElementById('root')
     )
   </script>

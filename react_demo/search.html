@@ -21,6 +21,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
   <script type="text/babel">
+    const KEY_CONST = 1100101
     const salesInfo = [
       {category: "Sporting", price: "$49.99", stocked: true, name: "Football"},
       {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
@@ -157,11 +158,9 @@
         const allCategory = !salesList ? [] : [...new Set(salesList.map(getCategory))]
         // 空列表
         const emptyList = (
-          <tbody>
-              <tr>
-                <td> no products find</td>
-              </tr>
-            </tbody>
+          <tr>
+            <td> no products find</td>
+          </tr>
         )
         const rowList = allCategory.map((key, index) =>
           (
@@ -172,7 +171,7 @@
                   productsName = { item.name } 
                   productsPrice = { item.price } 
                   isSaleInStocks = { item.stocked }
-                  key = { i }
+                  key = { i + KEY_CONST }
                 />
               )
             ]
@@ -189,7 +188,9 @@
                 <th>prices</th>
               </tr>
             </thead>
-            { rowDetails }
+            <tbody>
+              { rowDetails }
+            </tbody>
           </table>
         )
       }
