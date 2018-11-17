@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+  <script type="text/babel">
+    class ListWord extends React.PureComponent {
+      constructor(props) {
+        super(props)
+      }
+      render() {
+        return (
+          <p>{ this.props.word.join('---') }</p>
+        )
+      }
+    }
+
+    class AddWord extends React.PureComponent {
+      constructor(props) {
+        super(props)
+        this.state = {
+          word: ['hello']
+        }
+        this.handleChange.bind(this) 
+      }
+      handleChange(){
+        const word = this.state.word
+        word.push('word')
+        this.setSate({
+          word
+        })
+      }
+      render() {
+        return (
+          <div>
+            <ListWord word={ this.state.word } />
+            <button onClick={ this.handleChange }/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(
+      <AddWord />,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>
