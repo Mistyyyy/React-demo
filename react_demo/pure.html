@@ -35,10 +35,15 @@
       }
       handleChange(){
         const word = this.state.word
-        word.push('word')
-        this.setSate({
-          word
-        })
+        //该方法会改变原来数组的值 所以应该用concat来生成新的数组。
+        // 数据流应该保持不可变性 也就是要保持一定的纯性。
+        //word.push('word')
+        // this.setSate({
+        //   word: word.concat(['word'])
+        // })
+        this.setSate(preState => ({
+          word: [...preState,  'word']
+        }))
       }
       render() {
         return (
