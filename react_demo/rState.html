@@ -32,7 +32,7 @@
 				}
 				render() {
 					return (
-						<p>{ this.props.title } </p>	 
+						<p>{this.props.title} </p>	 
 					)
 				}
 			}
@@ -59,8 +59,8 @@
 				render() {
 					return (
 						<div>
-							<ParDesc title = { this.props.type === 'c' ? '请输入摄氏度' : '请输入华氏摄氏度' } />
-							<input type = "number" value = { this.props.tempure } onChange = { this.handleChange } />
+							<ParDesc title = {this.props.type === 'c' ? '请输入摄氏度' : '请输入华氏摄氏度'} />
+							<input type = "number" value = {this.props.tempure} onChange = {this.handleChange} />
 						</div>
 					)
 				}
@@ -95,15 +95,15 @@
 						<form>
 							<TypeTempure 
 								type ='c'
-								tempure = { celsius }
-								onTempureChange = { this.handleCelsius }
+								tempure = {celsius}
+								onTempureChange = {this.handleCelsius}
 							/>
 							<TypeTempure 
 								type = 'f'
-								tempure = { fahrenheit }
-								onTempureChange = { this.handleFah }
+								tempure = {fahrenheit}
+								onTempureChange = {this.handleFah}
 							/>
-							<Tempure tempure= { celsius }/>
+							<Tempure tempure= {celsius}/>
 						</form>	 
 					)
 				}

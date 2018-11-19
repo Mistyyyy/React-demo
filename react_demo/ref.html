@@ -26,7 +26,7 @@
         return (
           <div>
             <input type="text" ref={el => this.input = el} />
-            <input type="button" onClick={ this.focusHandle } value="press" />
+            <input type="button" onClick={this.focusHandle} value="press" />
           </div>
         )
       }
@@ -37,9 +37,9 @@
         super(props)
       }
       render() {
-        const { refInput } = this.props 
+        const {refInput} = this.props 
         return (
-          <input type="text" ref={ refInput }/>
+          <input type="text" ref={refInput}/>
         )
       }
     }
@@ -54,7 +54,7 @@
       }
       render() {
         return (
-          <input type="button" value="press" onClick={ this.handleChange } />
+          <input type="button" value="press" onClick={this.handleChange} />
         )
       }
     }
@@ -71,7 +71,7 @@
         return (
           <div>
             <RefInput refInput={ el => this.inputEle = el }/>
-            <Button onButtonChange={ this.focusChange } />
+            <Button onButtonChange={this.focusChange} />
           </div>  
         )
       }

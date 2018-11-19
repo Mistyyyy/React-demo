@@ -20,7 +20,7 @@
       }
       render() {
         return (
-          <h3> { this.props.title } </h3>  
+          <h3> {this.props.title} </h3>  
         )
       }
     }
@@ -35,7 +35,7 @@
       }
       render() {
         return (
-          <form onSubmit={ this.handleSubmit }>
+          <form onSubmit={this.handleSubmit}>
             <InputForm />
             <TextArea />
             <SelectInput />
@@ -61,7 +61,7 @@
             <Title title="this is input" />
             <label>
 							names:
-							<input type="text" value={ this.state.value } onChange={ this.handleChange } />
+							<input type="text" value={this.state.value} onChange={this.handleChange} />
 						</label>
           </div>
 				)
@@ -140,7 +140,7 @@
             <label>
               isGoing:
               <input type="checkbox" checked={this.state.isGoing} onChange={this.handleChange} name="isGoing" />
-              { this.state.isGoing ? 'yes' : 'no' }
+              {this.state.isGoing ? 'yes' : 'no'}
             </label>
           </form>  
         )

@@ -23,7 +23,7 @@
     function ListNumbers(props) {
       return (
         <li>
-          { props.values }
+          {props.values}
         </li>
       )
     }
@@ -33,7 +33,7 @@
         <ul>
           {
             props.number.map((item, index) =>
-              <ListNumbers key={ index } values={ item } />
+              <ListNumbers key={index} values={item} />
             )
           }
         </ul>
@@ -45,34 +45,34 @@
       const sideInfo = (<ul>
         {
           blogInfo.map((key, index) => 
-            <li key={ key.id }>
-              { key.title }
+            <li key={key.id}>
+              {key.title}
             </li>
           )
         }
       </ul>)
       const mainContent = 
         blogInfo.map((key, index) => 
-          <div key={ index }>
-            <h3>{ key.title }</h3>
-            <p>{ key.content }</p>
+          <div key={index}>
+            <h3>{key.title </h3>
+            <p>{key.content}</p>
           </div>
         )
 
       return (
         <div>
-          { sideInfo }
+          {sideInfo}
           <hr/>
-          { mainContent }
+          {mainContent}
         </div>
       )
     }
     ReactDOM.render(
         <div>
           <h1>PHello, world!</h1>
-          <div>{ listNumber }</div>
-          <Numbers number={ numbers } />
-          <Blog posts={ posts} />
+          <div>{listNumber}</div>
+          <Numbers number={numbers} />
+          <Blog posts={posts} />
         </div>,
         document.getElementById('root')
       )

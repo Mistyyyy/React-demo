@@ -51,8 +51,8 @@
         return (
           <input 
             type = "text"
-            value = { this.props.inputValue } 
-            onChange = { this.handleChange }
+            value = {this.props.inputValue} 
+            onChange = {this.handleChange}
             placeHolder = "search..."
           />
         )
@@ -72,8 +72,8 @@
           <div>
             <input
               type="checkbox"
-              checked = { this.props.checkboxState }
-              onChange = { this.handleChange }
+              checked = {this.props.checkboxState}
+              onChange = {this.handleChange}
             />
             <span>only show products in stock</span>
           </div>
@@ -105,12 +105,12 @@
         return (
           <div>
             <InputSearch 
-              onInputChange = { this.handleInputChange } 
-              inputValue = { this.props.targetValue }
+              onInputChange = {this.handleInputChange} 
+              inputValue = {this.props.targetValue}
             />
             <CheckBox 
-              onCheckboxChange = { this.handleCheckboxChange } 
-              checkboxState = { this.props.targetInStock }
+              onCheckboxChange = {this.handleCheckboxChange} 
+              checkboxState = {this.props.targetInStock}
             />
           </div>
         )
@@ -125,8 +125,8 @@
         const { productsName, productsPrice, isSaleInStocks } = this.props
         return (
           <tr>
-            <td className = { isSaleInStocks ? 'in' : 'no' }> { productsName } </td>
-            <td> { productsPrice } </td>
+            <td className = {isSaleInStocks ? 'in' : 'no'}> {productsName} </td>
+            <td> {productsPrice} </td>
           </tr>
         )
       }
@@ -137,10 +137,10 @@
         super(props)
       }
       render() {
-        const { categoryName }= this.props
+        const {categoryName}= this.props
         return (
           <tr>
-            <td> { categoryName } </td>
+            <td> {categoryName} </td>
           </tr>
         )
       }
@@ -168,10 +168,10 @@
               <ProductCategoryRow categoryName = { key } key = { index } />,
               getTargetInfo(salesList, key).map((item, i) => 
                 <ProductRow 
-                  productsName = { item.name } 
-                  productsPrice = { item.price } 
-                  isSaleInStocks = { item.stocked }
-                  key = { i + KEY_CONST }
+                  productsName = {item.name} 
+                  productsPrice = {item.price} 
+                  isSaleInStocks = {item.stocked}
+                  key = {i + KEY_CONST}
                 />
               )
             ]
@@ -189,7 +189,7 @@
               </tr>
             </thead>
             <tbody>
-              { rowDetails }
+              {rowDetails}
             </tbody>
           </table>
         )
@@ -211,21 +211,21 @@
         return (
           <div>
             <SearchBar 
-              targetValue = { this.state.targetValue } 
-              targetInStock = { this.state.targetInStock }
-              onChange = { this.handleChange }
+              targetValue = {this.state.targetValue} 
+              targetInStock = {this.state.targetInStock}
+              onChange = {this.handleChange}
             />
             <ProductTable 
-              targetValue = { this.state.targetValue } 
-              targetInStock = { this.state.targetInStock }
-              { ...this.props }
+              targetValue = {this.state.targetValue} 
+              targetInStock = {this.state.targetInStock}
+              {...this.props}
             />
           </div>
         )
       }
     }
     ReactDOM.render(
-      <FilterableProductTable salesInfo = { salesInfo } />,
+      <FilterableProductTable salesInfo = {salesInfo} />,
       document.getElementById('app')
     )
   </script>
