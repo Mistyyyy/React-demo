@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.1/babel.min.js"></script>
+  <script type="text/babel">
+    class InnerCat extends React.Component {
+      render() {
+        const { mouse } = this.props
+        return (
+          <div>
+            <p>this is a innerCat location is x:{mouse.xLocate} y:{mouse.yLocate}</p>
+          </div>
+        )
+      }
+    }
+    class MouseMove extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          xLocate: 0,
+          yLocate: 0
+        }
+        this.handleMove = this.handleMove.bind(this)
+      }
+      handleMove(e) {
+        this.setState = {
+          xLocate: e.clientX,
+          yLocate: e.clientY
+        }
+      }
+      render() {
+        const { children } = this.props
+        return (
+          <div onMouseOver={this.handleMove} style={{height: '100%'}}>
+            <p>Now you can move the mouse</p>
+            {
+              children(this.state)
+            }
+          </div>  
+        )
+      }
+    }
+    ReactDOM.render(
+      <MouseMove>
+        {
+          mouse => <InnerCat mouse={mouse} />
+        }
+      </MouseMove>,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>
